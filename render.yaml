@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: iphone17-review-lab
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: HOST_PASSWORD
+        sync: false

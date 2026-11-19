@@ -2,7 +2,10 @@
   "name": "iphone17-review-lab",
   "private": true,
   "type": "module",
-  "dependencies": {
-    "@netlify/blobs": "^8.1.0"
+  "scripts": {
+    "start": "node server.mjs"
+  },
+  "engines": {
+    "node": ">=18"
   }
 }

@@ -1,4 +1,4 @@
-import { getStore } from "@netlify/blobs";
+import { getStore } from "./store.mjs";
 
 const LIMIT = 20000; // ms to answer
 const GRACE = 1500;  // network slack after the timer ends
@@ -286,4 +286,3 @@ export default async (req) => {
   return bad("Unknown action");
 };
 
-export const config = { path: "/api/game" };

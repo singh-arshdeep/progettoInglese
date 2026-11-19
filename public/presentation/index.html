@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>iPhone 17 – Tech Review</title>
+<meta name="description" content="A personal review of the iPhone 17, told through 3D renders.">
+<meta name="theme-color" content="#000000">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/base.css">
+<link rel="stylesheet" href="assets/style.css">
+<script>document.documentElement.classList.add('js')</script>
+<script>if (/[?&]embed\b/.test(location.search)) document.documentElement.classList.add('embed')</script>
+</head>
+<body data-entrance="already-there">
+
+<!-- the chapter band: the review's name, the chapter in view, one action -->
+<header class="band">
+  <a class="band__mark" href="#top">Tech Review</a>
+  <p class="band__now" aria-live="polite"></p>
+</header>
+
+<!-- presentation: the arrows (and the keyboard or a clicker) step through every section and every reveal -->
+<div class="deck" role="group" aria-label="Presentation">
+  <button class="deck__btn" type="button" data-deck="prev" aria-label="Previous step"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
+  <button class="deck__btn deck__btn--next" type="button" data-deck="next" aria-label="Next step"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12l7 7 7-7"/></svg></button>
+</div>
+
+<main id="top">
+  <!-- 1 · the five colours: the title recedes as they come close -->
+  <section class="hero" data-hero aria-labelledby="hero-h">
+    <div class="hero__sticky">
+      <div class="hero__words">
+        <h1 id="hero-h" data-e="headline">iPhone <span class="late">17</span></h1>
+        <p class="hero__lead" data-e="lead">Tech Review</p>
+      </div>
+      <div class="hero__pic" data-e="picture">
+        <video muted playsinline preload="none" poster="assets/cut/lineup_colours.webp" data-v="lineup_colours" aria-label="The iPhone 17 in five colours, standing in a row"></video>
+      </div>
+    </div>
+  </section>
+  <script>
+  (() => {
+    if (!document.body || !document.body.dataset.entrance || false) return;
+    for (const f of document.querySelectorAll('[data-hero] [data-e="picture"]:not([data-e-wait])')) {
+      const m = f.querySelector(':scope > img, :scope > video, :scope > picture > img');
+      if (!m || (m.tagName === 'VIDEO' ? m.readyState >= 2 : m.complete && m.naturalWidth)) continue;
+      f.setAttribute('data-e-wait', '');
+      let done = false;
+      const land = () => {
+        if (done) return; done = true;
+        if (performance.now() < 700 && document.body.dataset.entrance !== 'already-there') f.removeAttribute('data-e-wait');
+        else f.setAttribute('data-e-wait', 'late');
+      };
+      m.addEventListener(m.tagName === 'VIDEO' ? 'loadeddata' : 'load', land, { once: true });
+      m.addEventListener('error', land, { once: true });
+      setTimeout(land, 3000);
+    }
+  })();
+  </script>
+
+  <!-- 2 · key features: two cards, uneven, each render on its own graphite panel -->
+  <section class="sec features" id="features" data-name="Key Features" aria-labelledby="features-h">
+    <h2 id="features-h" class="wrap">Key Features</h2>
+    <ul class="pair wrap" data-appear>
+      <li class="card card--wide" style="--i:0">
+        <div class="card__pic"><video width="1920" height="1080" muted playsinline preload="none" poster="assets/poster/02_Features_48MP_camera0181-0360.webp" data-v="02_Features_48MP_camera0181-0360" data-dir="video" aria-label="Render of the 48MP camera on the back of the iPhone 17"></video></div>
+        <h3 class="card__title"><span data-roll>48</span>MP Camera</h3>
+      </li>
+      <li class="card card--narrow" style="--i:1">
+        <div class="card__pic"><video width="1920" height="1080" muted playsinline preload="none" poster="assets/poster/04_A19_chip_speed0541-0690.webp" data-v="04_A19_chip_speed0541-0690" data-dir="video" aria-label="Render of the iPhone 17 screen, run by the A19 chip"></video></div>
+        <h3 class="card__title">A<span data-roll>19</span> Chip + Apple Intelligence</h3>
+      </li>
+    </ul>
+  </section>
+
+  <!-- 3 · what I love: four small cards appear one by one, right beside the heading -->
+  <section class="sec love" id="love" data-name="What I Love" aria-labelledby="love-h">
+    <div class="love__grid wrap">
+      <h2 id="love-h" class="love__h">What I love</h2>
+      <ul class="love__cards" data-appear>
+        <li class="tile" style="--i:0"><svg class="tile__icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="2.5" width="10" height="19" rx="2.2"/><path d="M11.5 5h3"/><path d="M2.5 8.5h3M1.5 12h4M2.5 15.5h3"/></svg><h3><span data-roll>120</span>Hz, super smooth</h3></li>
+        <li class="tile" style="--i:1"><svg class="tile__icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="7" width="17" height="10" rx="2.2"/><path d="M21.5 10.5v3"/><path d="M11.5 9l-2.5 3.5h3.5l-2.5 3.5"/></svg><h3>Lasts all day</h3></li>
+        <li class="tile" style="--i:2"><svg class="tile__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3.5h10l4.5 5.5L12 20.5 2.5 9z"/><path d="M2.5 9h19"/><path d="M9.5 3.5 8 9l4 11.5L16 9l-1.5-5.5"/></svg><h3>Feels premium</h3></li>
+        <li class="tile" style="--i:3"><svg class="tile__icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 12.3l2.8 2.8L16.2 9.5"/></svg><h3>Easy from day one</h3></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 4 · pros against cons: one section, the phone in the middle, the two sides pulling apart -->
+  <section class="sec versus" id="flaws" data-name="Pros vs Cons" aria-labelledby="versus-h">
+    <h2 id="versus-h" class="versus__h wrap"><span class="pro">Pros</span> <span class="versus__vs">vs</span> <span class="con">Cons</span></h2>
+    <div class="versus__grid wrap" data-appear>
+      <ul class="versus__side versus__side--pro" aria-label="Pros">
+        <li style="--i:0">Fast</li>
+        <li style="--i:1">Great camera</li>
+        <li style="--i:2">Easy to use</li>
+      </ul>
+      <div class="versus__pic"><video width="498" height="780" muted playsinline preload="none" poster="assets/cut/07_Pros_vs_cons_price1021-1200.webp" data-v="07_Pros_vs_cons_price1021-1200" aria-label="Render of the iPhone 17 weighing pros against cons"></video></div>
+      <ul class="versus__side versus__side--con" aria-label="Cons">
+        <li style="--i:0">Expensive</li>
+        <li style="--i:1">No charger in the box</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 5 · the verdict: who it is for, then the answer, with the phone standing tall beside it -->
+  <section class="sec verdict" id="verdict" data-name="My Verdict" aria-labelledby="verdict-h">
+    <div class="verdict__grid wrap" data-appear>
+      <div class="verdict__words">
+        <h2 id="verdict-h" style="--i:0">Definitely <span class="hl">recommended.</span></h2>
+        <p class="verdict__for" style="--i:1">For students who love photos and tech.</p>
+      </div>
+      <div class="verdict__pic" style="--i:1"><video width="452" height="930" muted playsinline preload="none" poster="assets/cut/slide5_verdict_black_1432-1560.webp" data-v="slide5_verdict_black_1432-1560" aria-label="3D render of the iPhone 17, recommended"></video></div>
+    </div>
+  </section>
+
+  <!-- 6 · the advice, and the end: the phone in its case, the line, and the two reasons it needs one -->
+  <section class="sec advice" id="advice" data-name="My Advice" aria-labelledby="advice-h" data-appear>
+    <div class="advice__grid wrap">
+      <svg class="advice__icon" viewBox="0 0 48 64" aria-hidden="true" data-appear><rect class="case" x="3" y="3" width="42" height="58" rx="10"/><rect x="9.5" y="9.5" width="29" height="45" rx="5"/><path d="M20 14.5h8"/><path class="case" d="M3 20v8M45 18v12"/></svg>
+      <div class="advice__words">
+        <h2 id="advice-h">Get a <span class="hl">strong case.</span></h2>
+        <ul class="advice__why">
+          <li style="--i:0">Glass on both sides</li>
+          <li style="--i:1">Repairs aren't cheap</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7 · glossary: the words of the review, on the light ground, apart from the review itself -->
+  <section class="sec glossary" id="glossary" data-name="Glossary" aria-labelledby="glossary-h">
+    <div class="wrap">
+      <h2 id="glossary-h">Glossary</h2>
+      <dl class="glossary__list" data-appear>
+        <div style="--i:0"><dt>state-of-the-art</dt><dd>all'avanguardia</dd><dd class="syn">≈ cutting-edge</dd></div>
+        <div style="--i:1"><dt>flagship</dt><dd>modello di punta</dd><dd class="syn">≈ top model</dd></div>
+        <div style="--i:2"><dt>seamless</dt><dd>fluido, senza intoppi</dd><dd class="syn">≈ smooth</dd></div>
+        <div style="--i:3"><dt>responsive</dt><dd>reattivo</dd><dd class="syn">≈ fast</dd></div>
+        <div style="--i:4"><dt>intuitive</dt><dd>intuitivo</dd><dd class="syn">≈ user-friendly</dd></div>
+        <div style="--i:5"><dt>stunning</dt><dd>straordinario</dd><dd class="syn">≈ amazing</dd></div>
+        <div style="--i:6"><dt>long-lasting</dt><dd>di lunga durata</dd><dd class="syn">≈ lasts all day</dd></div>
+        <div style="--i:7"><dt>pricey</dt><dd>costoso</dd><dd class="syn">≈ expensive</dd></div>
+        <div style="--i:8"><dt>drawback</dt><dd>svantaggio</dd><dd class="syn">≈ con</dd></div>
+        <div style="--i:9"><dt>strength</dt><dd>punto di forza</dd><dd class="syn">≈ pro</dd></div>
+        <div style="--i:10"><dt>sturdy</dt><dd>robusto</dd><dd class="syn">≈ strong</dd></div>
+        <div style="--i:11"><dt>nevertheless</dt><dd>tuttavia</dd><dd class="syn">≈ however</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- 8 · debate: AI is harmful to humans. We are against; Apple Intelligence is our case -->
+  <section class="debate" id="debate" data-name="Debate" aria-labelledby="debate-h">
+    <div class="debate__grid wrap">
+      <div class="debate__mark" role="img" aria-label="Apple Intelligence logo"></div>
+      <div class="debate__words">
+        <h2 id="debate-h">Debate</h2>
+        <p class="debate__motion">Motion: <strong>AI is harmful to humans.</strong></p>
+        <p class="debate__side">We stand <span class="hl">with AI.</span></p>
+        <p class="debate__lead">Apple Intelligence helps every day, from the simplest task to the hardest:</p>
+        <ol class="debate__steps">
+          <li style="--i:0">Sums up your notifications</li>
+          <li style="--i:1">Cleans up your photos</li>
+          <li style="--i:2">Rewrites your texts</li>
+          <li style="--i:3">Translates calls live</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/ScrollTrigger.min.js"></script>
+<script src="assets/base.js"></script>
+<script src="main.js"></script>
+</body>
+</html>
