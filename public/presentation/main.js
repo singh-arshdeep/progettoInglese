@@ -184,7 +184,7 @@ if (!reduced && window.gsap && window.ScrollTrigger) {
     else go(at - 1, at > 0 ? 'all' : 0);
   };
   // the class game drives the deck from the host's phone: every stop and every reveal is one numbered step
-  const NAMES = ['iPhone 17', 'Key Features', 'What I Love', 'Pros vs Cons', 'My Verdict', 'My Advice', 'Glossary', 'Debate', 'Language Expert', 'As or as if?', 'Recommending phrases', 'Your turn!'];
+  const NAMES = ['iPhone 17', 'Key Features', 'What I Love', 'Pros vs Cons', 'My Verdict', 'My Advice', 'Glossary', 'Debate', 'Language Expert', 'As or as if?', 'Recommending phrases'];
   const flat = () => live().flatMap((s, i) => [[i, 0], ...s.beats.map((_, b) => [i, b + 1])]);
   window.deck = {
     total: () => flat().length,
@@ -213,39 +213,23 @@ if (!reduced && window.gsap && window.ScrollTrigger) {
   $$('a[href^="#"]').forEach((a) => a.addEventListener('click', stop));
 }
 
-// ---- language expert, "Your turn!": the button shows the answers in the gaps, and hides them again
-{
-  const btn = document.querySelector('.lang__check');
-  const quiz = document.querySelector('.lang__quiz');
-  const label = btn.querySelector('.btn__label');
-  btn.addEventListener('click', () => {
-    const on = quiz.classList.toggle('is-solved');
-    btn.setAttribute('aria-pressed', on);
-    label.textContent = label.dataset.label = on ? 'Hide answers' : 'Show answers';
-  });
-}
-
 // ---- glossary: the class guesses the word; a click shows its Italian and the plain word from the review (and hides them)
 document.querySelectorAll('.term').forEach((b) => b.addEventListener('click', () => {
   b.setAttribute('aria-expanded', b.getAttribute('aria-expanded') !== 'true');
 }));
 
-// ---- class game: what is open in the glossary and in "Your turn!", read and set from outside,
+// ---- class game: which glossary words are open, read and set from outside,
 // and told to the game when the big screen clicks it, so every phone opens the same words
 {
   const terms = [...document.querySelectorAll('.term')];
-  const quiz = document.querySelector('.lang__quiz'), btn = document.querySelector('.lang__check'), label = btn.querySelector('.btn__label');
-  const ui = () => ({ terms: terms.map((b, i) => (b.getAttribute('aria-expanded') === 'true' ? i : -1)).filter((i) => i >= 0), solved: quiz.classList.contains('is-solved') });
+  const ui = () => ({ terms: terms.map((b, i) => (b.getAttribute('aria-expanded') === 'true' ? i : -1)).filter((i) => i >= 0) });
   Object.assign(window.deck, {
     ui,
-    setUi({ terms: open = [], solved = false } = {}) {
+    setUi({ terms: open = [] } = {}) {
       terms.forEach((b, i) => b.setAttribute('aria-expanded', open.includes(i)));
-      quiz.classList.toggle('is-solved', solved);
-      btn.setAttribute('aria-pressed', solved);
-      label.textContent = label.dataset.label = solved ? 'Hide answers' : 'Show answers';
     },
   });
   // the page's own click handlers run first, then this reports the new state
   const tell = () => { if (parent !== window) parent.postMessage({ type: 'deck-ui', ui: ui() }, location.origin); };
-  [...terms, btn].forEach((el) => el.addEventListener('click', tell));
+  terms.forEach((el) => el.addEventListener('click', tell));
 }
