@@ -114,7 +114,7 @@ function advance(st, ps) {
 async function start(s, st, ps, mode, total) {
   if (mode === "slides") {
     // the presentation keeps scores and stars as they are
-    st.mode = "slides"; st.total = total; st.idx = 0; st.phase = "slide"; st.q = null; st.reveal = null;
+    st.mode = "slides"; st.total = total; st.idx = 0; st.phase = "slide"; st.q = null; st.reveal = null; st.ui = { terms: [], solved: false };
     return;
   }
   // a new round starts clean: scores for the quiz, stars for the rating
@@ -240,6 +240,16 @@ export default async (req) => {
     } else {
       st.phase = "lobby";
     }
+    await s.setJSON(sk(b.pin), st);
+    return json({ ok: true });
+  }
+
+  // the big screen has no host key: it reports which glossary words and answers were clicked open on it
+  // shortcut: anyone with the PIN could send this; it only opens or closes words, so it stays unprotected
+  if (b.action === "ui") {
+    if (st.mode !== "slides" || st.phase !== "slide") return bad("The presentation is not on screen");
+    const terms = Array.isArray(b.ui?.terms) ? [...new Set(b.ui.terms.filter((i) => Number.isInteger(i) && i >= 0 && i < 100))] : [];
+    st.ui = { terms, solved: b.ui?.solved === true };
     await s.setJSON(sk(b.pin), st);
     return json({ ok: true });
   }

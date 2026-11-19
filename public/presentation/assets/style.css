@@ -322,13 +322,26 @@ a:not(.btn):focus-visible { outline: 2px solid var(--accent); outline-offset: 4p
 
 /* ---------- 7 · glossary: set apart on the light ground, the term and its Italian side by side ---------- */
 .glossary { background: var(--ink); color: var(--bg); margin-top: calc(var(--section-gap) / 2); }
-.glossary h2 { font-size: var(--step-display); line-height: 0.95; margin-bottom: clamp(2rem, 6vh, 3.5rem); }
-.glossary__list { margin: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(1.25rem, 3vh, 2rem) var(--gutter); }
-.glossary__list dt { font: 600 var(--step-sub)/1.1 var(--font-display); letter-spacing: -0.025em; color: #10563c; }
-.glossary__list dd { margin: 0.25rem 0 0; font-size: var(--step-lead); color: #3d413c; }
+.glossary h2 { font-size: min(var(--step-display), 12svh); line-height: 0.95; }
+.glossary__hint { margin: 0.75rem 0 clamp(1.5rem, 4vh, 2.5rem); font-size: var(--step-lead); color: #3d413c; }
+/* the words scattered, not in rows and columns: centred, wrapping, each at its own size and a little off its line */
+ul.glossary__cloud { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start; gap: clamp(0.25rem, 1.5svh, 1.25rem) clamp(1rem, 3vw, 3.5rem); }
+/* the offsets are in svh, so a short laptop screen keeps every word in view */
+.glossary__cloud > li { margin: calc(var(--dy, 0svh) * 0.7) 0 0 var(--dx, 0); }
+.term { appearance: none; border: 0; background: none; color: inherit; font: inherit; cursor: pointer; display: grid; justify-items: center; text-align: center; padding: 0.6rem 1rem; border-radius: var(--radius); transition: background-color var(--t-hover) ease, transform var(--t-press) var(--ease-out); }
+.term:active { transform: scale(0.97); }
+.term:focus-visible { outline: 2px solid var(--bg); outline-offset: 2px; }
+@media (hover: hover) { .term:hover { background: #d6d5cc; } }
+.term__en { font: 600 calc(min(var(--step-sub) * 1.45, 4.6svh) * var(--s, 1))/1.1 var(--font-display); letter-spacing: -0.03em; color: #10563c; white-space: nowrap; }
+/* the answer keeps its room while hidden, so a word opening never moves the others */
+.term__it { margin-top: 0.3rem; font-size: min(var(--step-lead), 2.6svh); color: var(--bg); }
+.term__syn { margin-top: 0.1rem; font-size: min(var(--step-body), 2.1svh); color: #5c6159; }
+.term:not([aria-expanded="true"]) :is(.term__it, .term__syn) { visibility: hidden; opacity: 0; transform: translateY(-6px); }
+.term :is(.term__it, .term__syn) { transition: opacity 350ms var(--ease-out), transform 450ms var(--ease-out), visibility 0s; }
+.term[aria-expanded="true"] { background: #d6d5cc; }
 @media all {
-  html.js .glossary__list > div { transition: opacity 500ms var(--ease-out), transform 600ms var(--ease-out); transition-delay: calc(var(--i, 0) * 50ms + 100ms); }
-  html.js .glossary__list:not(.is-in) > div { opacity: 0; transform: translateY(20px); }
+  html.js .glossary__cloud > li { transition: opacity 500ms var(--ease-out), transform 600ms var(--ease-out); transition-delay: calc(var(--i, 0) * 50ms + 100ms); }
+  html.js .glossary__cloud:not(.is-in) > li { opacity: 0; transform: translateY(20px); }
 }
 
 /* ---------- 8 · debate: on the graphite band, the Apple Intelligence mark lit by its own turning colours ---------- */
@@ -358,13 +371,14 @@ a:not(.btn):focus-visible { outline: 2px solid var(--accent); outline-offset: 4p
   html.js .debate__side.is-hid { transform: translateY(24px); }
 }
 @media (max-width: 68.74em) {
-  .glossary__list { grid-template-columns: repeat(2, 1fr); }
   .debate__grid { grid-template-columns: 1fr; row-gap: 2.5rem; }
   .debate__mark { width: 200px; justify-self: start; }
 }
 @media (max-width: 47.99em) {
   .glossary h2, .debate__words h2 { font-size: var(--step-head); }
-  .glossary__list { grid-template-columns: 1fr 1fr; }
+  .glossary__cloud > li { margin: 0; }
+  .term { padding: 0.5rem 0.6rem; }
+  .term__en { font-size: calc(var(--step-sub) * var(--s, 1)); }
   .debate { min-height: 0; }
   .debate__mark { width: 150px; }
 }
@@ -376,8 +390,6 @@ a:not(.btn):focus-visible { outline: 2px solid var(--accent); outline-offset: 4p
 /* full-screen slides only where the presentation runs, on wide screens; below that each is as tall as its content */
 @media (max-width: 68.74em) { .glossary, .debate { min-height: 0; } }
 .glossary { margin-top: 0; }
-/* the plain word from the review that the richer one replaces */
-.glossary__list dd.syn { margin-top: 0.15rem; font-size: var(--step-body); color: #5c6159; }
 /* on short screens (a laptop, the page inside claude.ai) a card turns wide and low, and cover would cut the phone top and
    bottom: show the whole frame instead. The render's ground is the card's graphite, so the extra room never shows */
 .card__pic video { object-fit: contain; }
@@ -386,7 +398,97 @@ a:not(.btn):focus-visible { outline: 2px solid var(--accent); outline-offset: 4p
   .features h2 { font-size: min(var(--step-display), 13svh); }
 }
 
+/* ---------- 9 · language expert: the class handout, on the glossary's light ground; four parts, a screen each ---------- */
+.lang { --real: #10563c; --unreal: #b2412a; background: var(--ink); color: var(--bg); padding-block: 0; }
+.lang__part { min-height: 100svh; display: grid; align-content: center; padding-block: calc(var(--band) + var(--section-gap) / 4) calc(var(--section-gap) / 4); }
+.lang h2 { font-size: var(--step-display); line-height: 0.95; }
+.lang__sub { margin: 0.75rem 0 clamp(2rem, 6vh, 3.5rem); font-size: var(--step-sub); letter-spacing: -0.02em; color: #3d413c; }
+.lang h3 { font-size: var(--step-sub); letter-spacing: -0.025em; margin-bottom: 1.25rem; }
+.lang h3.lang__big { font-size: var(--step-head); margin-bottom: clamp(2rem, 6vh, 3.5rem); }
+.lang__soft { color: #5c6159; font-weight: 400; }
+.lang b { font-weight: 600; color: var(--real); }
+.lang__real { color: var(--real); }
+.lang__unreal, .lang__side:last-child b { color: var(--unreal); }
+
+.lang__table { width: 100%; border-collapse: collapse; font-size: var(--step-lead); }
+.lang__table th, .lang__table td { text-align: left; padding: 0.9rem 1.5rem 0.9rem 0; border-bottom: 1px solid #c9c8bf; vertical-align: baseline; }
+.lang__table thead th { font: 400 var(--step-small)/1 var(--font-text); letter-spacing: 0.06em; text-transform: uppercase; color: #5c6159; padding-bottom: 0.75rem; }
+.lang__table tbody th { font: 600 var(--step-sub)/1.1 var(--font-display); letter-spacing: -0.025em; color: var(--real); white-space: nowrap; }
+.lang__table td:nth-child(2) { color: #3d413c; }
+
+.lang__vs { display: grid; grid-template-columns: 1fr 1fr; gap: var(--gutter); }
+.lang__side { background: #d6d5cc; border-radius: var(--radius); padding: clamp(1.5rem, 3vw, 2.5rem); }
+.lang__tag { margin: 0 0 1.25rem; font: 600 var(--step-sub)/1.1 var(--font-display); letter-spacing: -0.025em; }
+.lang__ex { margin: 0; font-size: var(--step-lead); }
+.lang__note { margin: 0.5rem 0 0; color: #5c6159; }
+.lang__tip { margin: clamp(1.5rem, 4vh, 2.5rem) 0 0; font-size: var(--step-lead); color: #3d413c; max-width: 52ch; }
+
+.lang__phrases { list-style: none; margin: 0; padding: 0; display: grid; gap: clamp(1.5rem, 4vh, 2.5rem); }
+.lang__pattern { margin: 0 0 0.4rem; font: 600 var(--step-sub)/1.15 var(--font-display); letter-spacing: -0.025em; }
+.lang__phrases .lang__ex { color: #3d413c; padding-left: 1.25rem; border-left: 3px solid var(--real); }
+
+ol.lang__quiz { list-style: decimal; margin: 0 0 clamp(2rem, 5vh, 3rem); padding-left: 1.5em; display: grid; gap: 1rem; font-size: var(--step-sub); letter-spacing: -0.02em; line-height: 1.35; }
+.lang__quiz li::marker { color: #5c6159; font-weight: 600; }
+.gap { position: relative; display: inline-block; min-width: 8ch; border-bottom: 2px solid var(--bg); text-align: center; line-height: 1.1; }
+.gap > span { font-weight: 600; color: var(--real); transition: opacity 400ms var(--ease-out); }
+/* the answers stay hidden, for screen readers too, until the button (or a presentation step) shows them */
+html:not(.is-presenting) .lang__quiz:not(.is-solved) .gap > span, .gap > span.is-hid { visibility: hidden; opacity: 0; position: absolute; left: 0; }
+.lang__check { justify-self: start; }
+.lang__check:focus-visible { outline-color: var(--bg); }
+.lang__check .btn__plus { background: var(--bg); }
+.lang__check .btn__plus::before, .lang__check .btn__plus::after { background: var(--ink); }
+
+@media all {
+  html.js .lang__table tbody tr, html.js .lang__side, html.js .lang__phrases > li, html.js .lang__quiz > li { transition: opacity 500ms var(--ease-out), transform 600ms var(--ease-out); }
+  html.js .lang__table tbody tr.is-hid, html.js .lang__phrases > li.is-hid, html.js .lang__quiz > li.is-hid { transform: translateX(-32px); }
+  html.js .lang__side.is-hid { transform: translateY(32px) scale(0.96); }
+}
+@media (max-width: 68.74em) { .lang__part { min-height: 0; padding-block: calc(var(--section-gap) / 2); } }
+@media (max-width: 47.99em) {
+  .lang h2 { font-size: var(--step-head); }
+  .lang__vs { grid-template-columns: 1fr; }
+  /* the table turns into one block per linker: the word, then its meaning and its example */
+  .lang__table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+  .lang__table tr, .lang__table th, .lang__table td { display: block; }
+  .lang__table tr { padding: 1rem 0; border-bottom: 1px solid #c9c8bf; }
+  .lang__table th, .lang__table td { border: 0; padding: 0.15rem 0; }
+  .lang__quiz { font-size: var(--step-lead); }
+}
+
+/* the glossary words float in tiny slow circles, each at its own pace and starting point (translate, so the press scale still works) */
+@keyframes term-float {
+  0%, 100% { translate: 4px 0; }
+  12.5% { translate: 2.8px 2.8px; }
+  25% { translate: 0 4px; }
+  37.5% { translate: -2.8px 2.8px; }
+  50% { translate: -4px 0; }
+  62.5% { translate: -2.8px -2.8px; }
+  75% { translate: 0 -4px; }
+  87.5% { translate: 2.8px -2.8px; }
+}
+@media all {
+  .term { animation: term-float calc(7s + var(--i, 0) * 0.37s) linear calc(var(--i, 0) * -1.3s) infinite; }
+  .glossary__cloud > li:nth-child(even) .term { animation-direction: reverse; }
+}
+
 /* inside the class game the host's remote steps through the deck: no arrows, no scrollbar */
 .embed .deck { display: none; }
 .embed, .embed body { scrollbar-width: none; }
 .embed::-webkit-scrollbar, .embed body::-webkit-scrollbar { display: none; }
+
+/* ---------- one style for every part: Debate, Glossary and Language Expert on the same black ground as the review,
+   light text, sage for the good / real side, coral for the other ---------- */
+.debate, .glossary, .lang { background: var(--bg); color: var(--ink); }
+.lang { --real: var(--accent); --unreal: var(--con); }
+.glossary__hint, .lang__sub, .lang__tip, .lang__table td:nth-child(2), .lang__phrases .lang__ex { color: var(--muted); }
+.term__en { color: var(--accent); }
+.term__it { color: var(--ink); }
+.term__syn, .lang__soft, .lang__note, .lang__table thead th, .lang__quiz li::marker { color: var(--muted); }
+.term[aria-expanded="true"] { background: var(--surface); }
+@media (hover: hover) { .term:hover { background: var(--surface); } }
+.term:focus-visible, .lang__check:focus-visible { outline-color: var(--ink); }
+.lang__table th, .lang__table td, .lang__table tr { border-bottom-color: #343a42; }
+.lang__side { background: var(--surface); }
+.gap { border-bottom-color: var(--ink); }
+.lang__check .btn__plus { background: var(--accent-ink); }
+.lang__check .btn__plus::before, .lang__check .btn__plus::after { background: var(--accent); }

@@ -268,6 +268,8 @@ ol.board .pos{color:var(--muted)}
    so the projector and every phone show exactly the same picture ---------- */
 .stage{position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;border-radius:14px;background:#000;box-shadow:0 0 0 1px var(--line)}
 .stage iframe{position:absolute;left:0;top:0;width:1600px;height:900px;border:0;transform:scale(var(--s,.25));transform-origin:0 0;pointer-events:none;background:#000}
+/* only the big screen can click inside the deck (glossary words, Show answers) */
+body.host #stage iframe{pointer-events:auto}
 .slidebar{display:flex;justify-content:space-between;align-items:center;gap:16px}
 .progress{flex:1;height:6px;border-radius:6px;background:var(--surface2);overflow:hidden}
 .progress i{display:block;height:100%;background:var(--accent);transform-origin:left;transition:transform .6s var(--enter)}
@@ -570,6 +572,14 @@ function deckGo(id, step){
   };
   run();
 }
+// glossary words and "Show answers" opened on the big screen, copied to every other screen
+function deckUi(id, ui){
+  const el = $(id), f = el && el.querySelector('iframe'), d = f && f.contentWindow && f.contentWindow.deck;
+  const want = JSON.stringify(ui || {terms:[], solved:false});
+  if (d && d.setUi && f.dataset.ui !== want) { d.setUi(JSON.parse(want)); f.dataset.ui = want; }
+}
+let onDeckUi = null;
+addEventListener('message', e => { if (e.origin === location.origin && e.data && e.data.type === 'deck-ui' && onDeckUi) onDeckUi(e.data.ui); });
 // how many steps the deck has and where each part starts (read once from a hidden copy)
 let DECK = null, DECK_INFO = null;
 function deckInfo(){
@@ -593,7 +603,7 @@ function deckInfo(){
 const partAt = step => DECK_INFO ? DECK_INFO.stops.filter(x => x.step <= step).pop() : null;
 
 let loop = null, tick = null;
-function stop(){ clearTimeout(loop); clearInterval(tick); loop = tick = null; document.body.classList.remove('host', 'present'); $('topRight').hidden = true; Sound.stopMusic(); }
+function stop(){ clearTimeout(loop); clearInterval(tick); loop = tick = null; onDeckUi = null; document.body.classList.remove('host', 'present'); $('topRight').hidden = true; Sound.stopMusic(); }
 function wipe(label, fn){
   if (reduced || !label) { fn(); return; }
   const w = $('wipe'); w.querySelector('span').textContent = label; w.className = 'wipe on'; Sound.sfx.whoosh();
@@ -693,6 +703,7 @@ function remoteView(h){
         if (st.phase === 'slide' && sig.startsWith('slides:slide:') && $('rStage') && DECK_INFO) { sig = s; slideRemote(); }
         else { sig = s; render(); }
       }
+      if (st.phase === 'slide') deckUi('rStage', st.ui);
       live();
     } catch (e) {
       if (e.status === 404) { store.del('rl-host'); toast('That game no longer exists.'); return home(); }
@@ -814,6 +825,13 @@ function screenView(pin, unlocked){
   const joinUrl = location.origin + location.pathname + '?pin=' + pin;
   let st = null, off = 0, sig = '', shown = new Set(), lastVotes = 0, lastSec = 99, preSec = 0, qOpen = false, lastMode = null;
   $('topRight').hidden = false; $('topRight').textContent = 'PIN ' + pin;
+  let uiLocal = 0;
+  onDeckUi = ui => {
+    uiLocal = Date.now();
+    const f = $('stage') && $('stage').querySelector('iframe'); if (f) f.dataset.ui = JSON.stringify(ui);
+    Sound.sfx.pop();
+    api(null, {action:'ui', pin, ui}).catch(e => toast(e.message));
+  };
   if (unlocked) { Sound.ensure(); poll(); }
   else {
     // one click on the projector unlocks music and sound
@@ -833,7 +851,7 @@ function screenView(pin, unlocked){
         if (st.phase === 'slide' && lastMode === 'slides' && $('stage')) slideStep(); else wipe(label, full);
         lastMode = st.phase === 'slide' ? 'slides' : st.mode + st.phase;
       }
-      else live();
+      else { live(); if (st.phase === 'slide') slideStep(); }
     } catch (e) {
       if (e.status === 404) return screenAuto();
     }
@@ -848,6 +866,8 @@ function screenView(pin, unlocked){
   function slideStep(){
     document.body.classList.add('present');
     deckGo('stage', st.idx);
+    // a click made here a moment ago wins over a poll that left before it
+    if (Date.now() - uiLocal > 2500) deckUi('stage', st.ui);
     $('sbar') && ($('sbar').style.transform = `scaleX(${(st.idx + 1) / st.total})`);
     $('sNum') && ($('sNum').textContent = `${st.idx + 1} / ${st.total}`);
   }
@@ -1085,6 +1105,7 @@ function playerGame(pin){
       tr.hidden = false; tr.textContent = `${st.me.name} · ${st.me.score}`;
       const s = [st.mode, st.phase, st.idx, st.me.answer ? 'a' : '', sentFor === st.phase + ':' + st.idx ? 's' : ''].join(':');
       if (s !== sig) { sig = s; render(); }
+      if (st.phase === 'slide') deckUi('pStage', st.ui);
     } catch (e) {
       if (e.status === 404) { store.del('rl-player'); return joinView('', 'That game has ended.'); }
     }

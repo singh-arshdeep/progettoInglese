@@ -132,24 +132,25 @@
     </div>
   </section>
 
-  <!-- 7 · glossary: the words of the review, on the light ground, apart from the review itself -->
+  <!-- 7 · glossary: the words of the review scattered on the light ground; the class guesses, a click shows the Italian and the plain word -->
   <section class="sec glossary" id="glossary" data-name="Glossary" aria-labelledby="glossary-h">
     <div class="wrap">
       <h2 id="glossary-h">Glossary</h2>
-      <dl class="glossary__list" data-appear>
-        <div style="--i:0"><dt>state-of-the-art</dt><dd>all'avanguardia</dd><dd class="syn">≈ cutting-edge</dd></div>
-        <div style="--i:1"><dt>flagship</dt><dd>modello di punta</dd><dd class="syn">≈ top model</dd></div>
-        <div style="--i:2"><dt>seamless</dt><dd>fluido, senza intoppi</dd><dd class="syn">≈ smooth</dd></div>
-        <div style="--i:3"><dt>responsive</dt><dd>reattivo</dd><dd class="syn">≈ fast</dd></div>
-        <div style="--i:4"><dt>intuitive</dt><dd>intuitivo</dd><dd class="syn">≈ user-friendly</dd></div>
-        <div style="--i:5"><dt>stunning</dt><dd>straordinario</dd><dd class="syn">≈ amazing</dd></div>
-        <div style="--i:6"><dt>long-lasting</dt><dd>di lunga durata</dd><dd class="syn">≈ lasts all day</dd></div>
-        <div style="--i:7"><dt>pricey</dt><dd>costoso</dd><dd class="syn">≈ expensive</dd></div>
-        <div style="--i:8"><dt>drawback</dt><dd>svantaggio</dd><dd class="syn">≈ con</dd></div>
-        <div style="--i:9"><dt>strength</dt><dd>punto di forza</dd><dd class="syn">≈ pro</dd></div>
-        <div style="--i:10"><dt>sturdy</dt><dd>robusto</dd><dd class="syn">≈ strong</dd></div>
-        <div style="--i:11"><dt>nevertheless</dt><dd>tuttavia</dd><dd class="syn">≈ however</dd></div>
-      </dl>
+      <p class="glossary__hint">Guess the Italian, then click the word.</p>
+      <ul class="glossary__cloud" data-appear>
+        <li style="--i:0; --s:0.95; --dy:2.5svh; --dx:0rem"><button class="term" type="button" aria-expanded="false"><span class="term__en">drawback</span><span class="term__it">svantaggio</span><span class="term__syn">≈ con</span></button></li>
+        <li style="--i:1; --s:1.15; --dy:0svh; --dx:2rem"><button class="term" type="button" aria-expanded="false"><span class="term__en">state-of-the-art</span><span class="term__it">all&#39;avanguardia</span><span class="term__syn">≈ cutting-edge</span></button></li>
+        <li style="--i:2; --s:0.9; --dy:3svh; --dx:2rem"><button class="term" type="button" aria-expanded="false"><span class="term__en">pricey</span><span class="term__it">costoso</span><span class="term__syn">≈ expensive</span></button></li>
+        <li style="--i:3; --s:1.3; --dy:0.5svh; --dx:1rem"><button class="term" type="button" aria-expanded="false"><span class="term__en">seamless</span><span class="term__it">fluido, senza intoppi</span><span class="term__syn">≈ smooth</span></button></li>
+        <li style="--i:4; --s:1; --dy:3.5svh; --dx:1.5rem"><button class="term" type="button" aria-expanded="false"><span class="term__en">sturdy</span><span class="term__it">robusto</span><span class="term__syn">≈ strong</span></button></li>
+        <li style="--i:5; --s:1.2; --dy:0svh; --dx:0rem"><button class="term" type="button" aria-expanded="false"><span class="term__en">flagship</span><span class="term__it">modello di punta</span><span class="term__syn">≈ top model</span></button></li>
+        <li style="--i:6; --s:0.95; --dy:2.5svh; --dx:3rem"><button class="term" type="button" aria-expanded="false"><span class="term__en">long-lasting</span><span class="term__it">di lunga durata</span><span class="term__syn">≈ lasts all day</span></button></li>
+        <li style="--i:7; --s:1.35; --dy:0.5svh; --dx:2rem"><button class="term" type="button" aria-expanded="false"><span class="term__en">stunning</span><span class="term__it">straordinario</span><span class="term__syn">≈ amazing</span></button></li>
+        <li style="--i:8; --s:0.9; --dy:3svh; --dx:1.5rem"><button class="term" type="button" aria-expanded="false"><span class="term__en">nevertheless</span><span class="term__it">tuttavia</span><span class="term__syn">≈ however</span></button></li>
+        <li style="--i:9; --s:1; --dy:1svh; --dx:0rem"><button class="term" type="button" aria-expanded="false"><span class="term__en">intuitive</span><span class="term__it">intuitivo</span><span class="term__syn">≈ user-friendly</span></button></li>
+        <li style="--i:10; --s:1.15; --dy:3svh; --dx:2.5rem"><button class="term" type="button" aria-expanded="false"><span class="term__en">responsive</span><span class="term__it">reattivo</span><span class="term__syn">≈ fast</span></button></li>
+        <li style="--i:11; --s:1; --dy:0.5svh; --dx:2rem"><button class="term" type="button" aria-expanded="false"><span class="term__en">strength</span><span class="term__it">punto di forza</span><span class="term__syn">≈ pro</span></button></li>
+      </ul>
     </div>
   </section>
 
@@ -169,6 +170,68 @@
           <li style="--i:3">Translates calls live</li>
         </ol>
       </div>
+    </div>
+  </section>
+
+  <!-- 9 · language expert: the class handout on how to talk about a device, on the light ground like the glossary.
+       Four parts, each a screen (and a presentation stop) of its own -->
+  <section class="sec lang" id="language" data-name="Language Expert" aria-labelledby="lang-h">
+    <div class="lang__part wrap">
+      <h2 id="lang-h">Language Expert</h2>
+      <p class="lang__sub">How to talk about a device</p>
+      <h3>Linkers of manner: <span class="lang__soft">how something happens</span></h3>
+      <table class="lang__table">
+        <thead><tr><th scope="col">Linker</th><th scope="col">Meaning</th><th scope="col">Example from our review</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">as</th><td>in the same way that</td><td>It works exactly <b>as</b> you expect.</td></tr>
+          <tr><th scope="row">as if</th><td>like (but it's not real)</td><td>Apps open <b>as if</b> they were already running.</td></tr>
+          <tr><th scope="row">as though</th><td>= as if, more formal</td><td>The screen looks <b>as though</b> it were made of glass.</td></tr>
+          <tr><th scope="row">the way</th><td>how, the manner in which</td><td>I love <b>the way</b> Apple Intelligence helps me.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="lang__part wrap">
+      <h3 class="lang__big">Watch out: <span class="lang__real">as</span> or <span class="lang__unreal">as if</span>?</h3>
+      <div class="lang__vs">
+        <div class="lang__side">
+          <p class="lang__tag lang__real">as = real</p>
+          <p class="lang__ex">It works <b>as</b> you expect.</p>
+          <p class="lang__note">It really works like that.</p>
+        </div>
+        <div class="lang__side">
+          <p class="lang__tag lang__unreal">as if / as though = not real</p>
+          <p class="lang__ex">Apps open <b>as if</b> they were already running.</p>
+          <p class="lang__note">They aren't running, it only seems so.</p>
+        </div>
+      </div>
+      <p class="lang__tip">Tip: after <b>as if</b> we often use the past: <b>were</b>, not "are".</p>
+    </div>
+
+    <div class="lang__part wrap">
+      <h3 class="lang__big">Recommending phrases</h3>
+      <ol class="lang__phrases">
+        <li>
+          <p class="lang__pattern">I would definitely recommend it <b>to</b> + person</p>
+          <p class="lang__ex">I would definitely recommend it to anyone who wants a cutting-edge phone.</p>
+        </li>
+        <li>
+          <p class="lang__pattern">My advice is <b>to</b> + verb</p>
+          <p class="lang__ex">My advice is to buy a strong case to protect it.</p>
+        </li>
+      </ol>
+      <p class="lang__tip">We use them at the end of a review, in the opinion and recommendation part.</p>
+    </div>
+
+    <div class="lang__part wrap">
+      <h3 class="lang__big">Your turn!</h3>
+      <ol class="lang__quiz">
+        <li>The battery lasts all day, <span class="gap"><span>as</span></span> Apple says.</li>
+        <li>The photos look <span class="gap"><span>as if / as though</span></span> they were taken by a professional.</li>
+        <li>I love <span class="gap"><span>the way</span></span> the camera works at night.</li>
+        <li>My advice is <span class="gap"><span>to buy</span></span> <span class="lang__soft">(buy)</span> a fast charger.</li>
+      </ol>
+      <button class="btn btn--small lang__check" type="button" aria-pressed="false"><span class="btn__label" data-label="Show answers">Show answers</span><span class="btn__plus" aria-hidden="true"></span></button>
     </div>
   </section>
 </main>
