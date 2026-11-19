@@ -40,7 +40,8 @@ async function file(req, res, pathname) {
   const ext = path.extname(f).toLowerCase();
   const headers = {
     "content-type": TYPES[ext] || "application/octet-stream",
-    "cache-control": ext === ".html" ? "no-cache" : "public, max-age=3600",
+    // pages, scripts and styles are checked on every load so an update shows at once; renders and pictures are kept an hour
+    "cache-control": [".mp4", ".webp", ".jpg", ".jpeg", ".png", ".woff2"].includes(ext) ? "public, max-age=3600" : "no-cache",
     "accept-ranges": "bytes",
   };
   // videos need byte ranges (Safari and iPhones will not play them otherwise)
